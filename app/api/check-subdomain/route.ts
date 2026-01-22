@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { SubdomainSchema } from "@/lib/validations";
 
+// Force dynamic rendering for this route (uses request headers)
+export const dynamic = 'force-dynamic';
+
 // Simple rate limiting map (in production, use Redis or similar)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 

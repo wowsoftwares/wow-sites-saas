@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { getBaseDomain } from "@/lib/constants";
@@ -11,29 +11,12 @@ interface ClientStatus {
   subdomain?: string;
 }
 
-export default function SuccessPage() {
+function SuccessPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const clientId = searchParams.get("clientId");
   const [client, setClient] = useState<ClientStatus | null>(null);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!clientId) {
-      router.push("/signup");
-      return;
-    }
-
-    // Fetch initial client status
-    fetchClientStatus();
-
-    // Set up auto-refresh every 10 seconds
-    const interval = setInterval(() => {
-      fetchClientStatus();
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, [clientId]);
 
   const fetchClientStatus = async () => {
     if (!clientId) return;
@@ -55,6 +38,24 @@ export default function SuccessPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!clientId) {
+      router.push("/signup");
+      return;
+    }
+
+    // Fetch initial client status
+    fetchClientStatus();
+
+    // Set up auto-refresh every 10 seconds
+    const interval = setInterval(() => {
+      fetchClientStatus();
+    }, 10000);
+
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clientId]);
 
   if (loading) {
     return (
@@ -142,7 +143,7 @@ export default function SuccessPage() {
                 Your Website is Being Created!
               </h1>
               <p className="text-xl text-gray-600 mb-4">
-                We're setting up your website. This usually takes 2-3 minutes.
+                We&apos;re setting up your website. This usually takes 2-3 minutes.
               </p>
               <div className="bg-gray-50 rounded-lg p-6 mb-6">
                 <p className="text-sm text-gray-600 mb-2">Your website will be at:</p>
@@ -161,7 +162,7 @@ export default function SuccessPage() {
                 </p>
               </div>
               <p className="text-gray-600 mb-6">
-                We'll send you an email confirmation once your website is live.
+                We&apos;ll send you an email confirmation once your website is live.
                 This page will automatically update when your site is ready.
               </p>
               {clientId && (
@@ -177,5 +178,20 @@ export default function SuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <SuccessPageContent />
+    </Suspense>
   );
 }
