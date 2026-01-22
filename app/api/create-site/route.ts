@@ -3,8 +3,10 @@ import { db } from "@/lib/db";
 import { ClientDataSchema } from "@/lib/validations";
 import { getBaseDomain } from "@/lib/constants";
 
-// Force dynamic rendering for this route
+// Force dynamic rendering and prevent static analysis
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+export const fetchCache = 'force-no-store';
 
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL;
 const N8N_WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET;
