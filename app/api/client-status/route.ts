@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-// Force dynamic rendering and prevent static analysis
+// Force dynamic rendering for this route (uses searchParams)
 export const dynamic = 'force-dynamic';
-export const runtime = 'nodejs';
-export const fetchCache = 'force-no-store';
 
 export async function GET(request: NextRequest) {
   try {
