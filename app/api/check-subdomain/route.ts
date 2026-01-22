@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
 import { SubdomainSchema } from "@/lib/validations";
 
-// Force dynamic rendering for this route (uses request headers)
+// Force dynamic rendering and prevent static analysis
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+export const fetchCache = 'force-no-store';
 
 // Simple rate limiting map (in production, use Redis or similar)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -67,6 +68,9 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Lazy import db to avoid build-time initialization issues
+    const { db } = await import("@/lib/db");
+    
     // Check if subdomain exists in database
     const existingClient = await db.client.findUnique({
       where: { subdomain: subdomain.toLowerCase() },
