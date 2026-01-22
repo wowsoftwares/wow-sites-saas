@@ -45,7 +45,9 @@ cp .env.example .env.local
 ```
 
 Required environment variables:
-- `DATABASE_URL` - PostgreSQL connection string
+- `DATABASE_URL` - PostgreSQL connection string (from Supabase Dashboard → Settings → Database → Connection String → URI)
+  - **Recommended format for production:** Use connection pooling: `postgresql://postgres.xxxxx:[PASSWORD]@aws-0-us-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1`
+  - See `SUPABASE_SETUP.md` for detailed instructions
 - `CLOUDFLARE_API_TOKEN` - Cloudflare API token with DNS:Edit permissions
 - `CLOUDFLARE_ZONE_ID` - Your Cloudflare zone ID
 - `BREVO_API_KEY` - Brevo API key for sending emails
