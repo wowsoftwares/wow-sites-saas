@@ -4,10 +4,8 @@ import { WebhookPayloadSchema } from "@/lib/validations";
 import { sendWelcomeEmail, sendErrorEmail } from "@/lib/email";
 import { CLIENT_STATUS } from "@/lib/constants";
 
-// Force dynamic rendering and prevent static analysis
+// Force dynamic rendering for this route
 export const dynamic = 'force-dynamic';
-export const runtime = 'nodejs';
-export const fetchCache = 'force-no-store';
 
 const N8N_WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET;
 
