@@ -44,6 +44,8 @@ Copy `.env.example` to `.env.local` and fill in all required values:
 cp .env.example .env.local
 ```
 
+**Note:** This project uses `.env.local` for all environment variables. Prisma CLI commands automatically load from `.env.local` using `dotenv-cli` (configured in package.json scripts).
+
 Required environment variables:
 - `DATABASE_URL` - PostgreSQL connection string (from Supabase Dashboard → Settings → Database → Connection String → URI)
   - **Recommended format for production:** Use connection pooling: `postgresql://postgres.xxxxx:[PASSWORD]@aws-0-us-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1`

@@ -125,6 +125,8 @@ Add to your `.env.local`:
 DATABASE_URL="postgresql://postgres.xxxxx:[YOUR-PASSWORD]@aws-0-us-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1"
 ```
 
+**Important:** This project uses `.env.local` for all environment variables. Prisma CLI commands are configured to automatically load from `.env.local` using `dotenv-cli`, so you don't need a separate `.env` file.
+
 ### Step 4: Test Connection
 
 ```bash
