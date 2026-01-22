@@ -27,10 +27,6 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchClientData();
-  }, [clientId]);
-
   const fetchClientData = async () => {
     try {
       const response = await fetch(`/api/client/${clientId}`);
@@ -45,6 +41,11 @@ export default function DashboardPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchClientData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clientId]);
 
   if (loading) {
     return (
@@ -188,7 +189,7 @@ export default function DashboardPage() {
             Editing Coming Soon
           </h3>
           <p className="text-blue-800">
-            We're working on adding the ability to edit your website content
+            We&apos;re working on adding the ability to edit your website content
             directly from this dashboard. For now, if you need to make changes,
             please contact our support team.
           </p>

@@ -3,6 +3,9 @@ import { db } from "@/lib/db";
 import { ClientDataSchema } from "@/lib/validations";
 import { getBaseDomain } from "@/lib/constants";
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL;
 const N8N_WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET;
 
@@ -52,8 +55,8 @@ export async function POST(request: NextRequest) {
         address: clientData.address || null,
         aboutUs: clientData.aboutUs,
         services: clientData.services,
-        hours: clientData.hours || null,
-        socialLinks: clientData.socialLinks || null,
+        hours: clientData.hours ? (clientData.hours as any) : null,
+        socialLinks: clientData.socialLinks ? (clientData.socialLinks as any) : null,
         templateId: clientData.industry, // Use industry as templateId
         status: "pending",
       },
